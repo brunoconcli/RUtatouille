@@ -8,6 +8,17 @@ BEM-VINDO
 0. Fechar
 
 ---
+[Login]
+
+ACESSAR
+
+Digite seu codigo:
+
+[Enter] para cancelar...
+[Usuário logado com sucesso!]--> PaginaInicial
+
+---
+
 [CriarUsuario]
 
 CRIAR USUÁRIO
@@ -24,7 +35,7 @@ Nome:
 
 PÁGINA INICIAL 
 
-1. Adiquir refeição
+1. Adquirir refeição
 2. Devolver refeição
 3. Comprar Créditos
 4. Perfil
