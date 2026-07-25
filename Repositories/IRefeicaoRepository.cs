@@ -4,6 +4,6 @@ namespace Repositories;
 
 public interface IRefeicaoRepository
 {
-  Refeicao? ObterPorDia(DiaSemana dia);
-  IReadOnlyDictionary<DiaSemana, Refeicao> ListarTodas();
+  public Refeicao? ObterPorDia(DiaSemana dia);
+  public IReadOnlyDictionary<DiaSemana, Refeicao> ListarTodas();
 }

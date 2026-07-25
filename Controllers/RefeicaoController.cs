@@ -1,0 +1,51 @@
+using Models;
+using Repositories;
+
+namespace Controllers;
+
+public class RefeicaoController
+{
+  private readonly IRefeicaoRepository _refeicaoRepository;
+  private readonly IUsuarioRepository _usuarioRepository;
+  private readonly IReservaRepository _reservaRepository;
+
+  public RefeicaoController(IRefeicaoRepository refeicaoRepository, IUsuarioRepository usuarioRepository, IReservaRepository reservaRepository)
+  {
+    _refeicaoRepository = refeicaoRepository;
+    _usuarioRepository = usuarioRepository;
+    _reservaRepository = reservaRepository;
+  }
+
+  public void AdquirirRefeicao(string usuarioCodigo, DiaSemana diaSemana)
+  {
+    var refeicao = _refeicaoRepository.ObterPorDia(diaSemana) ??
+      throw new InvalidOperationException("Não há refeições registradas para esse dia.");
+
+    var usuario = _usuarioRepository.ObterPorCodigo(usuarioCodigo) ??
+      throw new InvalidOperationException("O usuário referenciado não existe.");
+
+    if (_reservaRepository.ObterPorCodigoDeUsuarioEDia(usuarioCodigo, diaSemana) != null)
+      throw new InvalidOperationException("Você já tem uma reserva ativa para esse dia.");
+
+    usuario.DebitarCredito(refeicao.Preco);
+
+    var reserva = new Reserva(_reservaRepository.GerarProximoId(), usuarioCodigo, diaSemana, refeicao.Preco);
+    _reservaRepository.Adicionar(reserva);
+  }
+  public void DevolverRefeicao(string usuarioCodigo, DiaSemana diaSemana)
+  {
+    var reserva = _reservaRepository.ObterPorCodigoDeUsuarioEDia(usuarioCodigo, diaSemana) ??
+      throw new InvalidOperationException("Você não possui uma reserva ativa para esse dia.");
+
+    var usuario = _usuarioRepository.ObterPorCodigo(usuarioCodigo) ??
+      throw new InvalidOperationException("O usuário referenciado não existe.");
+
+    reserva.Devolver();
+    usuario.AdicionarCredito(reserva.ValorPago);
+  }
+
+  public IReadOnlyDictionary<DiaSemana, Refeicao> ListarCardapio()
+  {
+    return _refeicaoRepository.ListarTodas();
+  }
+}

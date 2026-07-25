@@ -2,6 +2,8 @@ namespace Models;
 
 public class Refeicao
 {
+    public const double PrecoPadrao = 2.50;
+
     public string PratoPrincipal { get; private set;}
     public string Acompanhamento { get; private set;}
     public string Sobremesa { get; private set;}
