@@ -1,25 +1,13 @@
+using Models;
+using Repositories;
+
 public class UsuarioController
 {
-  // Lista em memória simulando o banco de dados
-  private readonly List<Usuario> _usuarios = new();
-
-  // Método para tratar a criação de um usuário
-  public void RegistrarNovoUsuario(string email, string nome)
+  private readonly IUsuarioRepository _usuarioRepository;
+  public UsuarioController(IUsuarioRepository usuarioRepository)
   {
-    var fabrica = new Usuario();
-    Usuario novoUsuario;
-    if (_usuarios.Any())
-    {
-      int ultimoCodigo = int.Parse(_usuarios.Last().Codigo);
-      ultimoCodigo++;
-      novoUsuario = fabrica.CriarUsuario(ultimoCodigo.ToString(), email.ToLower(), nome);
-    }
-    else
-      novoUsuario = fabrica.CriarUsuario("1", email, nome);
-
-    _usuarios.Add(novoUsuario);
+    _usuarioRepository = usuarioRepository;  
   }
-
   public void AdicionarCredito(Usuario usuario, double valor)
   {
     if(valor <= 0)
@@ -28,6 +16,12 @@ public class UsuarioController
       return; // TODO: Pensar nos valores de erro.
     }
     usuario.AdicionarCredito(valor);
+  }
+  public void RegistrarUsuario(string email, string nome)
+  {
+    var codigo = _usuarioRepository.GerarProximoCodigo();
+    var usuario = new Usuario(codigo, email, nome);
+    _usuarioRepository.Adicionar(usuario);
   }
   
 }

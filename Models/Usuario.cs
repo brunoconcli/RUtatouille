@@ -1,3 +1,5 @@
+namespace Models;
+
 public class Usuario
 {
   public string Codigo { get; set; }
@@ -19,4 +21,15 @@ public class Usuario
       throw new ArgumentException("O valor deve ser positivo");
     Extrato += valor;
   }
+
+  public void DebitarCredito(double valor)
+  {
+    if (valor <= 0)
+      throw new ArgumentException("O valor deve ser positivo!!");
+    if (valor > Extrato)
+      throw new ArgumentException("O valor deve ser menor que o extrato!!");
+
+    Extrato -= valor;
+  }
 }
+
