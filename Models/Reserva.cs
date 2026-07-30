@@ -11,12 +11,12 @@ public class Reserva
   public int Id { get; }
   public string UsuarioCodigo { get; private set; }
   public DiaSemana Dia { get; private set; }
-  public double ValorPago { get; private set; }
+  public decimal ValorPago { get; private set; }
   public StatusReserva Status { get; private set; }
   public DateTime DataAquisicao { get; private set; }
   public DateTime? DataDevolucao { get; private set; }
 
-  public Reserva(int id, string usuarioCodigo, DiaSemana dia, double valorPago)
+  public Reserva(int id, string usuarioCodigo, DiaSemana dia, decimal valorPago)
   {
     if (string.IsNullOrEmpty(usuarioCodigo))
       throw new ArgumentException("O código do usuário não pode ser nulo ou vazio.");

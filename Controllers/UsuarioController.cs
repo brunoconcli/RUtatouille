@@ -1,6 +1,8 @@
 using Models;
 using Repositories;
 
+namespace Controllers;
+
 public class UsuarioController
 {
   private readonly IUsuarioRepository _usuarioRepository;
@@ -8,7 +10,7 @@ public class UsuarioController
   {
     _usuarioRepository = usuarioRepository;  
   }
-  public void AdicionarCredito(Usuario usuario, double valor)
+  public void AdicionarCredito(Usuario usuario, decimal valor)
   {
     if(valor <= 0)
     {

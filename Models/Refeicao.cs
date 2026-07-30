@@ -2,15 +2,15 @@ namespace Models;
 
 public class Refeicao
 {
-    public const double PrecoPadrao = 2.50;
+    public const decimal PrecoPadrao = 2.50m;
 
     public string PratoPrincipal { get; private set;}
     public string Acompanhamento { get; private set;}
     public string Sobremesa { get; private set;}
     public string Suco { get; private set;}
-    public double Preco {get; private set;}
+    public decimal Preco {get; private set;}
 
-    public Refeicao (string pratoPrincipal, string acompanhamento, string sobremesa, string suco, double preco)
+    public Refeicao (string pratoPrincipal, string acompanhamento, string sobremesa, string suco, decimal preco)
     {
       if (preco <= 0)
         throw new ArgumentException("O preço deve ser um valor positivo.");
