@@ -13,9 +13,9 @@ public class Refeicao
     public Refeicao (string pratoPrincipal, string acompanhamento, string sobremesa, string suco, decimal preco)
     {
       if (preco <= 0)
-        throw new ArgumentException("O preço deve ser um valor positivo.");
-      if (string.IsNullOrEmpty(pratoPrincipal))
-        throw new ArgumentException("O prato principal não pode ser nulo ou vazio.");
+        throw new ArgumentOutOfRangeException(nameof(preco), "O preço deve ser positivo.");
+
+      ArgumentException.ThrowIfNullOrWhiteSpace(pratoPrincipal);
 
       PratoPrincipal = pratoPrincipal;
       Acompanhamento = acompanhamento;

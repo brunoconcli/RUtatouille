@@ -8,17 +8,16 @@ public class UsuarioController
   private readonly IUsuarioRepository _usuarioRepository;
   public UsuarioController(IUsuarioRepository usuarioRepository)
   {
-    _usuarioRepository = usuarioRepository;  
+    _usuarioRepository = usuarioRepository ??
+      throw new ArgumentNullException(nameof(usuarioRepository));
   }
+
   public void AdicionarCredito(Usuario usuario, decimal valor)
   {
-    if(valor <= 0)
-    {
-      Console.WriteLine("O valor deve ser positivo!!");
-      return; // TODO: Pensar nos valores de erro.
-    }
+    ArgumentNullException.ThrowIfNull(usuario);
     usuario.AdicionarCredito(valor);
   }
+
   public void RegistrarUsuario(string email, string nome)
   {
     var codigo = _usuarioRepository.GerarProximoCodigo();

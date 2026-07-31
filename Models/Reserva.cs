@@ -18,10 +18,10 @@ public class Reserva
 
   public Reserva(int id, string usuarioCodigo, DiaSemana dia, decimal valorPago)
   {
-    if (string.IsNullOrEmpty(usuarioCodigo))
-      throw new ArgumentException("O código do usuário não pode ser nulo ou vazio.");
+    ArgumentException.ThrowIfNullOrWhiteSpace(usuarioCodigo);
+
     if (valorPago <= 0)
-      throw new ArgumentException("O valor pago deve ser positivo.");
+      throw new ArgumentOutOfRangeException(nameof(valorPago), "O valor pago deve ser positivo.");
 
     Id = id;
     UsuarioCodigo = usuarioCodigo;

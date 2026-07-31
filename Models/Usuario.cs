@@ -18,16 +18,17 @@ public class Usuario
   public void AdicionarCredito(decimal valor)
   {
     if (valor <= 0)
-      throw new ArgumentException("O valor deve ser positivo");
+      throw new ArgumentOutOfRangeException(nameof(valor), "O valor deve ser positivo.");
+
     Saldo += valor;
   }
 
   public void DebitarCredito(decimal valor)
   {
     if (valor <= 0)
-      throw new ArgumentException("O valor deve ser positivo!!");
+      throw new ArgumentOutOfRangeException(nameof(valor), "O valor deve ser positivo.");
     if (valor > Saldo)
-      throw new ArgumentException("O valor deve ser menor ou igual ao saldo disponível!!");
+      throw new InvalidOperationException("Saldo insuficiente.");
 
     Saldo -= valor;
   }

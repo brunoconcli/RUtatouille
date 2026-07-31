@@ -11,13 +11,18 @@ public class RefeicaoController
 
   public RefeicaoController(IRefeicaoRepository refeicaoRepository, IUsuarioRepository usuarioRepository, IReservaRepository reservaRepository)
   {
-    _refeicaoRepository = refeicaoRepository;
-    _usuarioRepository = usuarioRepository;
-    _reservaRepository = reservaRepository;
+    _refeicaoRepository = refeicaoRepository ??
+      throw new ArgumentNullException(nameof(refeicaoRepository));
+    _usuarioRepository = usuarioRepository ??
+      throw new ArgumentNullException(nameof(usuarioRepository));
+    _reservaRepository = reservaRepository ??
+      throw new ArgumentNullException(nameof(reservaRepository));
   }
 
   public void AdquirirRefeicao(string usuarioCodigo, DiaSemana diaSemana)
   {
+    ArgumentException.ThrowIfNullOrWhiteSpace(usuarioCodigo);
+
     var refeicao = _refeicaoRepository.ObterPorDia(diaSemana) ??
       throw new InvalidOperationException("Não há refeições registradas para esse dia.");
 
@@ -34,6 +39,8 @@ public class RefeicaoController
   }
   public void DevolverRefeicao(string usuarioCodigo, DiaSemana diaSemana)
   {
+    ArgumentException.ThrowIfNullOrWhiteSpace(usuarioCodigo);
+
     var reserva = _reservaRepository.ObterPorCodigoDeUsuarioEDia(usuarioCodigo, diaSemana) ??
       throw new InvalidOperationException("Você não possui uma reserva ativa para esse dia.");
 
