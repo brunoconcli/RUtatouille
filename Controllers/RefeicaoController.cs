@@ -55,4 +55,30 @@ public class RefeicaoController
   {
     return _refeicaoRepository.ListarTodas();
   }
+
+  public IReadOnlyList<Reserva> ListarReservasPorUsuario(string usuarioCodigo)
+  {
+    ValidarUsuario(usuarioCodigo);
+
+    return _reservaRepository
+      .ListarPorUsuario(usuarioCodigo)
+      .ToList()
+      .AsReadOnly();
+  }
+
+  public IReadOnlyList<Reserva> ListarReservasAtivas(string usuarioCodigo)
+  {
+    return ListarReservasPorUsuario(usuarioCodigo)
+      .Where(reserva => reserva.Status == StatusReserva.Ativa)
+      .ToList()
+      .AsReadOnly();
+  }
+
+  private Usuario ValidarUsuario(string usuarioCodigo)
+  {
+    ArgumentException.ThrowIfNullOrWhiteSpace(usuarioCodigo);
+
+    return _usuarioRepository.ObterPorCodigo(usuarioCodigo) ??
+      throw new InvalidOperationException("O usuário referenciado não existe.");
+  }
 }

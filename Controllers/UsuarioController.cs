@@ -18,6 +18,14 @@ public class UsuarioController
     usuario.AdicionarCredito(valor);
   }
 
+  public Usuario ObterPorCodigo(string codigo)
+  {
+    ArgumentException.ThrowIfNullOrWhiteSpace(codigo);
+
+    return _usuarioRepository.ObterPorCodigo(codigo) ??
+      throw new InvalidOperationException("Usuário não encontrado.");
+  }
+
   public Usuario RegistrarUsuario(string email, string nome)
   {
     ArgumentException.ThrowIfNullOrWhiteSpace(email);
