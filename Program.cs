@@ -1,5 +1,7 @@
 using Controllers;
 using Repositories;
+using System.Globalization;
+using Views;
 
 namespace RUtatouille;
 
@@ -7,6 +9,9 @@ class Program
 {
   public static void Main(string[] args)
   {
+    CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("pt-BR");
+    CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("pt-BR");
+
     var usuarioRepository = new InMemoryUsuarioRepository();
     var refeicaoRepository = new InMemoryRefeicaoRepository();
     var reservaRepository = new InMemoryReservaRepository();
@@ -18,10 +23,24 @@ class Program
       reservaRepository
     );
 
+    var bemVindoView = new BemVindoView();
+    var criarUsuarioView = new CriarUsuarioView(usuarioController);
+    var loginView = new LoginView(usuarioController);
+    var homeView = new HomeView();
+    var comprarCreditosView = new ComprarCreditosView(usuarioController);
+    var adquirirRefeicaoView = new AdquirirRefeicaoView(refeicaoController);
+    var devolverRefeicaoView = new DevolverRefeicaoView(refeicaoController);
+    var perfilView = new PerfilView(refeicaoController);
+
     var aplicacaoController = new AplicacaoController(
-      usuarioController,
-      refeicaoController
-    );
+      bemVindoView,
+      criarUsuarioView,
+      loginView,
+      homeView,
+      comprarCreditosView,
+      adquirirRefeicaoView,
+      devolverRefeicaoView,
+      perfilView);
 
     aplicacaoController.Executar();
   }
