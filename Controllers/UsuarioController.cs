@@ -18,11 +18,18 @@ public class UsuarioController
     usuario.AdicionarCredito(valor);
   }
 
-  public void RegistrarUsuario(string email, string nome)
+  public Usuario RegistrarUsuario(string email, string nome)
   {
+    ArgumentException.ThrowIfNullOrWhiteSpace(email);
+    ArgumentException.ThrowIfNullOrWhiteSpace(nome);
+
+    if (_usuarioRepository.ObterPorEmail(email) is not null)
+      throw new InvalidOperationException("Já existe um usuário com esse e-mail.");
+
     var codigo = _usuarioRepository.GerarProximoCodigo();
     var usuario = new Usuario(codigo, email, nome);
     _usuarioRepository.Adicionar(usuario);
+    return usuario;
   }
   
 }

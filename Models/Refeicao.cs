@@ -16,11 +16,14 @@ public class Refeicao
         throw new ArgumentOutOfRangeException(nameof(preco), "O preço deve ser positivo.");
 
       ArgumentException.ThrowIfNullOrWhiteSpace(pratoPrincipal);
+      ArgumentException.ThrowIfNullOrWhiteSpace(acompanhamento);
+      ArgumentException.ThrowIfNullOrWhiteSpace(sobremesa);
+      ArgumentException.ThrowIfNullOrWhiteSpace(suco);
 
-      PratoPrincipal = pratoPrincipal;
-      Acompanhamento = acompanhamento;
-      Sobremesa = sobremesa;
-      Suco = suco;
+      PratoPrincipal = pratoPrincipal.Trim();
+      Acompanhamento = acompanhamento.Trim();
+      Sobremesa = sobremesa.Trim();
+      Suco = suco.Trim();
       Preco = preco;
     }
 }

@@ -25,6 +25,9 @@ public class InMemoryRefeicaoRepository : IRefeicaoRepository
 
   public Refeicao? ObterPorDia(DiaSemana dia)
   {
+    if (!Enum.IsDefined(typeof(DiaSemana), dia))
+      throw new ArgumentOutOfRangeException(nameof(dia), "O dia da semana é inválido.");
+
     return _cardapio.GetValueOrDefault(dia);
   }
 }

@@ -20,11 +20,15 @@ public class Reserva
   {
     ArgumentException.ThrowIfNullOrWhiteSpace(usuarioCodigo);
 
+    if (id <= 0)
+      throw new ArgumentOutOfRangeException(nameof(id), "O ID deve ser positivo.");
+    if (!Enum.IsDefined(typeof(DiaSemana), dia))
+      throw new ArgumentOutOfRangeException(nameof(dia), "O dia da semana é inválido.");
     if (valorPago <= 0)
       throw new ArgumentOutOfRangeException(nameof(valorPago), "O valor pago deve ser positivo.");
 
     Id = id;
-    UsuarioCodigo = usuarioCodigo;
+    UsuarioCodigo = usuarioCodigo.Trim();
     Dia = dia;
     ValorPago = valorPago;
     Status = StatusReserva.Ativa;
